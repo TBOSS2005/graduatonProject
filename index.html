@@ -1,10 +1,4 @@
-I will now update your graduation website (`index.html`) to remove the upload previewer button and replace it with a clean, standard `<picture>` tag (and `<img>` fallback) ready for your backend image path, along with the updated HTML file below.
 
-index.html [generated with web_code_canvas tool]
-
-Here is the complete updated HTML file with the upload button removed and a `<picture>` tag placed directly in the portrait frame:
-
-```html
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -255,10 +249,10 @@ Here is the complete updated HTML file with the upload button removed and a `<pi
                    BACKEND IMAGE SLOT: Replace srcset / src paths with your graduation photo
                    ========================================================================= -->
               <picture class="w-full h-full block">
-                <source srcset="assets/images/praise-graduation.webp" type="image/webp" />
-                <source srcset="assets/images/praise-graduation.jpg" type="image/jpeg" />
+                <source srcset="photo.jpeg" type="image/webp" />
+                <source srcset="photo.jpeg" type="image/jpeg" />
                 <img 
-                  src="assets/images/praise-graduation.jpg" 
+                  src="photo.jpeg" 
                   alt="Praise Oluwatishe Oluwaseun — B.Sc. Computer Science Graduate, Pan-Atlantic University" 
                   class="w-full h-full object-cover object-center"
                 />
