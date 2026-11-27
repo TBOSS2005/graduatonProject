@@ -1,0 +1,868 @@
+I will now update your graduation website (`index.html`) to remove the upload previewer button and replace it with a clean, standard `<picture>` tag (and `<img>` fallback) ready for your backend image path, along with the updated HTML file below.
+
+index.html [generated with web_code_canvas tool]
+
+Here is the complete updated HTML file with the upload button removed and a `<picture>` tag placed directly in the portrait frame:
+
+```html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Praise Oluwatishe Oluwaseun | B.Sc. Computer Science Graduation — PAU</title>
+  
+  <!-- Tailwind CSS CDN for rapid responsive styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Playfair Display, Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0B0B0D',
+            charcoal: '#16161A',
+            gold: {
+              light: '#F3D98B',
+              DEFAULT: '#D4AF37',
+              dark: '#AA821C',
+            },
+            ivory: '#FAFAFA',
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* =========================================
+       CUSTOM CSS STYLES & MOBILE OPTIMIZATIONS
+       ========================================= */
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: #FAFAFA;
+      color: #0B0B0D;
+    }
+
+    /* Full-screen non-blocking confetti canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Metallic Gold Text Shimmer */
+    .gold-shimmer {
+      background: linear-gradient(120deg, #AA821C 0%, #D4AF37 30%, #F7E39C 50%, #D4AF37 70%, #AA821C 100%);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: shine 4.5s linear infinite;
+    }
+
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    /* Subtle Geometric Circuit Background Pattern */
+    .circuit-bg {
+      background-image: radial-gradient(rgba(212, 175, 55, 0.16) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Gold Glow Shadow */
+    .gold-glow {
+      box-shadow: 0 12px 35px -8px rgba(212, 175, 55, 0.35);
+    }
+
+    /* Touch-friendly minimum target size for mobile phones */
+    button, a.touch-btn {
+      touch-action: manipulation;
+    }
+
+    /* Mobile navigation drawer transition */
+    #mobile-menu {
+      transition: max-height 0.3s ease-in-out, opacity 0.25s ease-in-out;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    #mobile-menu.open {
+      max-height: 360px;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-gold selection:text-obsidian">
+
+  <!-- Self-Contained Confetti Overlay Canvas -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- =========================================
+       STICKY NAVIGATION BAR (DESKTOP & MOBILE)
+       ========================================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-black/10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <!-- Brand / Monogram -->
+      <a href="#top" class="flex items-center gap-2.5 group">
+        <span class="w-9 h-9 rounded-full bg-obsidian text-gold border border-gold flex items-center justify-center font-serif font-bold text-sm tracking-wider group-hover:scale-105 transition">
+          PO
+        </span>
+        <div class="leading-tight">
+          <span class="font-serif font-bold text-base sm:text-lg text-obsidian block">Praise ’26</span>
+          <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-500 block">PAU Computer Science</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-neutral-700">
+        <a href="#event-details" class="hover:text-gold-dark transition">Event & Venue</a>
+        <a href="#journey" class="hover:text-gold-dark transition">4-Year Journey</a>
+        <a href="#dress-code" class="hover:text-gold-dark transition">Dress Code</a>
+        <a href="#rsvp" class="hover:text-gold-dark transition">RSVP</a>
+        <a href="#gift" class="hover:text-gold-dark transition">Bless the Grad</a>
+      </nav>
+
+      <!-- Desktop Confetti Button & Mobile Menu Toggle -->
+      <div class="flex items-center gap-2">
+        <button 
+          type="button"
+          onclick="triggerConfettiBurst()" 
+          class="min-h-[42px] px-3.5 sm:px-4 py-2 rounded-full bg-obsidian text-white text-xs sm:text-sm font-semibold border border-gold/60 hover:bg-neutral-900 active:scale-95 transition flex items-center gap-1.5 shadow-sm">
+          <span>✨</span>
+          <span>Celebrate</span>
+        </button>
+
+        <!-- Mobile Hamburger Button -->
+        <button 
+          type="button" 
+          id="menu-toggle" 
+          aria-label="Toggle Menu"
+          aria-expanded="false"
+          class="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl border border-black/15 text-obsidian hover:bg-neutral-100 active:scale-95 transition">
+          <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Collapsible Mobile Drawer -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-black/10 px-4">
+      <nav class="flex flex-col py-3 space-y-1 text-base font-medium text-obsidian">
+        <a href="#event-details" class="mobile-nav-link py-3 px-3 rounded-xl hover:bg-neutral-100 active:bg-neutral-200 transition">Date, Time & Venue</a>
+        <a href="#journey" class="mobile-nav-link py-3 px-3 rounded-xl hover:bg-neutral-100 active:bg-neutral-200 transition">4-Year Journey</a>
+        <a href="#dress-code" class="mobile-nav-link py-3 px-3 rounded-xl hover:bg-neutral-100 active:bg-neutral-200 transition">Dress Code (White, Black & Gold)</a>
+        <a href="#rsvp" class="mobile-nav-link py-3 px-3 rounded-xl hover:bg-neutral-100 active:bg-neutral-200 transition">Family RSVP Form</a>
+        <a href="#gift" class="mobile-nav-link py-3 px-3 rounded-xl hover:bg-neutral-100 active:bg-neutral-200 transition">Bless the Graduate (OPay)</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =========================================
+       HERO SECTION & GRADUATE PORTRAIT FRAME
+       ========================================= -->
+  <section id="top" class="relative circuit-bg pt-10 pb-16 sm:pt-16 sm:pb-24 px-4 sm:px-6 overflow-hidden">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      
+      <!-- Left Column: Celebration Headline & Interactive Actions -->
+      <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-obsidian text-gold-light text-xs font-mono uppercase tracking-widest border border-gold/40 shadow-sm">
+          <span>🎓</span>
+          <span>Undergraduate Convocation • Class of 2026</span>
+        </div>
+
+        <h1 class="font-serif font-extrabold text-obsidian leading-[1.12] tracking-tight" style="font-size: clamp(2.15rem, 5.5vw, 3.85rem);">
+          Praise Oluwatishe <span class="gold-shimmer block sm:inline">Oluwaseun</span>
+        </h1>
+
+        <p class="text-base sm:text-xl text-neutral-700 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+          Four years of algorithms, late-night debugging, and perseverance have officially compiled into a <strong class="text-obsidian font-semibold">B.Sc. in Computer Science</strong> from <strong class="text-obsidian font-semibold">Pan-Atlantic University (PAU)</strong>!
+        </p>
+
+        <!-- Primary Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3.5 pt-2">
+          <a href="#rsvp" class="touch-btn min-h-[52px] px-7 py-3.5 rounded-full bg-obsidian text-white font-semibold text-sm sm:text-base border-2 border-gold hover:bg-neutral-900 active:scale-[0.98] transition flex items-center justify-center gap-2 gold-glow">
+            <span>Confirm Attendance (RSVP)</span>
+            <span>→</span>
+          </a>
+
+          <button 
+            type="button" 
+            id="cheer-btn"
+            onclick="incrementCheer()"
+            class="touch-btn min-h-[52px] px-6 py-3.5 rounded-full bg-white text-obsidian font-semibold text-sm sm:text-base border-2 border-obsidian hover:bg-neutral-100 active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-sm">
+            <span>👏</span>
+            <span>Tap to Cheer Praise</span>
+            <span id="cheer-count" class="ml-1 px-2.5 py-0.5 rounded-full bg-gold/25 text-obsidian font-mono text-xs font-bold">124</span>
+          </button>
+        </div>
+
+        <!-- Quick Highlights Strip -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-4 max-w-lg mx-auto lg:mx-0">
+          <div class="bg-white border border-black/10 rounded-2xl p-3 text-center shadow-sm">
+            <span class="block font-serif font-bold text-base sm:text-xl text-obsidian">4th Dec 2026</span>
+            <span class="text-[11px] sm:text-xs text-neutral-500 font-medium">Saturday • 10:30 AM</span>
+          </div>
+          <div class="bg-white border border-black/10 rounded-2xl p-3 text-center shadow-sm">
+            <span class="block font-serif font-bold text-base sm:text-xl text-gold-dark">B.Sc. CS</span>
+            <span class="text-[11px] sm:text-xs text-neutral-500 font-medium">4-Year Program</span>
+          </div>
+          <div class="bg-white border border-black/10 rounded-2xl p-3 text-center shadow-sm">
+            <span class="block font-serif font-bold text-base sm:text-xl text-obsidian">PAU</span>
+            <span class="text-[11px] sm:text-xs text-neutral-500 font-medium">Ibeju-Lekki, Lagos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Main Graduation Portrait Frame -->
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="relative w-full max-w-sm sm:max-w-md">
+          <!-- Decorative Offset Gold Frame -->
+          <div class="absolute -inset-3 rounded-[2rem] border-2 border-gold/60 rotate-2 pointer-events-none"></div>
+          
+          <div class="relative bg-obsidian rounded-[1.75rem] p-3 sm:p-4 border-2 border-gold shadow-2xl">
+            <div class="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-charcoal border border-gold/30 flex items-center justify-center">
+              
+              <!-- =========================================================================
+                   BACKEND IMAGE SLOT: Replace srcset / src paths with your graduation photo
+                   ========================================================================= -->
+              <picture class="w-full h-full block">
+                <source srcset="assets/images/praise-graduation.webp" type="image/webp" />
+                <source srcset="assets/images/praise-graduation.jpg" type="image/jpeg" />
+                <img 
+                  src="assets/images/praise-graduation.jpg" 
+                  alt="Praise Oluwatishe Oluwaseun — B.Sc. Computer Science Graduate, Pan-Atlantic University" 
+                  class="w-full h-full object-cover object-center"
+                />
+              </picture>
+
+            </div>
+
+            <!-- Caption Plate Below Portrait -->
+            <div class="pt-3.5 pb-1 px-2 flex items-center justify-between text-xs">
+              <span class="font-mono text-gold-light uppercase tracking-wider">B.Sc. Computer Science</span>
+              <span class="text-neutral-400">Pan-Atlantic University</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================
+       EVENT DETAILS, LIVE COUNTDOWN & CAMPUS VENUE
+       ========================================= -->
+  <section id="event-details" class="py-16 sm:py-20 px-4 sm:px-6 bg-white border-t border-black/10">
+    <div class="max-w-5xl mx-auto space-y-10">
+      <div class="text-center space-y-3 max-w-2xl mx-auto">
+        <span class="font-mono text-xs uppercase tracking-widest text-gold-dark">Convocation Ceremony</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-obsidian">When & Where to Celebrate</h2>
+        <p class="text-sm sm:text-base text-neutral-600">
+          Join us at Pan-Atlantic University as Praise officially graduates with a B.Sc. in Computer Science.
+        </p>
+      </div>
+
+      <!-- Live Countdown Bar -->
+      <div class="bg-obsidian text-white rounded-3xl p-6 sm:p-8 border-2 border-gold shadow-xl">
+        <p class="text-center font-mono text-xs uppercase tracking-widest text-gold-light mb-5">
+          ⏳ Countdown to Saturday, 4th December 2026 • 10:30 AM
+        </p>
+        <div class="grid grid-cols-4 gap-2.5 sm:gap-5 max-w-xl mx-auto text-center">
+          <div class="bg-charcoal border border-gold/30 rounded-2xl py-3.5 px-2">
+            <span id="cd-days" class="block font-serif font-bold text-2xl sm:text-4xl text-white">00</span>
+            <span class="text-[11px] sm:text-xs font-mono uppercase text-neutral-400">Days</span>
+          </div>
+          <div class="bg-charcoal border border-gold/30 rounded-2xl py-3.5 px-2">
+            <span id="cd-hours" class="block font-serif font-bold text-2xl sm:text-4xl text-gold-light">00</span>
+            <span class="text-[11px] sm:text-xs font-mono uppercase text-neutral-400">Hours</span>
+          </div>
+          <div class="bg-charcoal border border-gold/30 rounded-2xl py-3.5 px-2">
+            <span id="cd-mins" class="block font-serif font-bold text-2xl sm:text-4xl text-white">00</span>
+            <span class="text-[11px] sm:text-xs font-mono uppercase text-neutral-400">Mins</span>
+          </div>
+          <div class="bg-charcoal border border-gold/30 rounded-2xl py-3.5 px-2">
+            <span id="cd-secs" class="block font-serif font-bold text-2xl sm:text-4xl text-gold">00</span>
+            <span class="text-[11px] sm:text-xs font-mono uppercase text-neutral-400">Secs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date/Time & School Address Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Date & Time Card -->
+        <div class="rounded-3xl p-7 bg-ivory border-2 border-neutral-200 flex flex-col justify-between space-y-5">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-obsidian text-gold flex items-center justify-center text-2xl">
+              🗓️
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-obsidian">Undergraduate Ceremony</h3>
+            <p class="text-base font-semibold text-gold-dark">
+              Saturday, 4th December 2026
+            </p>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              <strong>Time:</strong> 10:30 AM prompt (WAT)<br />
+              <strong>Program:</strong> B.Sc. Computer Science (4-Year Undergraduate Program)
+            </p>
+          </div>
+          <div class="pt-2">
+            <a 
+              href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Praise+Oluwatishe+Oluwaseun+PAU+Graduation&dates=20261204T093000Z/20261204T140000Z&details=B.Sc.+Computer+Science+Undergraduate+Convocation+at+Pan-Atlantic+University.+Dress+Code:+White+and+Black+with+a+touch+of+Gold.&location=Pan-Atlantic+University,+Km+52+Lekki-Epe+Expressway,+Ibeju-Lekki,+Lagos,+Nigeria" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="touch-btn inline-flex items-center justify-center w-full sm:w-auto min-h-[48px] px-5 py-3 rounded-xl bg-obsidian text-white text-xs sm:text-sm font-semibold border border-gold/60 hover:bg-neutral-900 active:scale-95 transition gap-2">
+              <span>+ Add to Google Calendar</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- School Address Card -->
+        <div class="rounded-3xl p-7 bg-ivory border-2 border-neutral-200 flex flex-col justify-between space-y-5">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-obsidian text-gold flex items-center justify-center text-2xl">
+              📍
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-obsidian">Campus Venue & Address</h3>
+            <p class="text-base font-semibold text-obsidian">
+              Pan-Atlantic University (PAU)
+            </p>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              Km 52, Lekki–Epe Expressway,<br />
+              Ibeju-Lekki, Lagos State, Nigeria
+            </p>
+          </div>
+          <div class="pt-2">
+            <a 
+              href="https://maps.google.com/?q=Pan-Atlantic+University,+Km+52+Lekki-Epe+Expressway,+Ibeju-Lekki,+Lagos" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="touch-btn inline-flex items-center justify-center w-full sm:w-auto min-h-[48px] px-5 py-3 rounded-xl bg-white text-obsidian text-xs sm:text-sm font-semibold border-2 border-obsidian hover:bg-neutral-100 active:scale-95 transition gap-2">
+              <span>Open in Google Maps</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       INTERACTIVE 4-YEAR CS JOURNEY (100L - 400L)
+       ========================================= -->
+  <section id="journey" class="py-16 sm:py-24 px-4 sm:px-6 bg-obsidian text-white border-y border-gold/30">
+    <div class="max-w-5xl mx-auto space-y-10">
+      <div class="text-center space-y-3 max-w-2xl mx-auto">
+        <span class="font-mono text-xs uppercase tracking-widest text-gold">4-Year Degree Milestone</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">The 4-Year Compilation Log</h2>
+        <p class="text-sm sm:text-base text-neutral-400">
+          Tap each academic level below to explore Praise’s 4-year Computer Science journey at Pan-Atlantic University.
+        </p>
+      </div>
+
+      <!-- Interactive Level Tabs -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4" role="tablist">
+        <button type="button" onclick="selectLevel(0)" id="tab-0" class="level-tab min-h-[48px] py-3 px-4 rounded-xl font-mono text-sm font-semibold border border-gold bg-gold text-obsidian transition active:scale-95">
+          100 Level
+        </button>
+        <button type="button" onclick="selectLevel(1)" id="tab-1" class="level-tab min-h-[48px] py-3 px-4 rounded-xl font-mono text-sm font-semibold border border-white/15 bg-charcoal text-neutral-300 hover:border-gold/50 transition active:scale-95">
+          200 Level
+        </button>
+        <button type="button" onclick="selectLevel(2)" id="tab-2" class="level-tab min-h-[48px] py-3 px-4 rounded-xl font-mono text-sm font-semibold border border-white/15 bg-charcoal text-neutral-300 hover:border-gold/50 transition active:scale-95">
+          300 Level
+        </button>
+        <button type="button" onclick="selectLevel(3)" id="tab-3" class="level-tab min-h-[48px] py-3 px-4 rounded-xl font-mono text-sm font-semibold border border-white/15 bg-charcoal text-neutral-300 hover:border-gold/50 transition active:scale-95">
+          400 Level 🎓
+        </button>
+      </div>
+
+      <!-- Dynamic Level Display Card -->
+      <div id="level-card" class="bg-charcoal border border-gold/40 rounded-3xl p-6 sm:p-10 shadow-xl transition-all">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5 mb-5">
+          <div>
+            <span id="level-badge" class="inline-block px-3 py-1 rounded-full bg-gold/15 text-gold font-mono text-xs mb-2">Year 1 • Hello World</span>
+            <h3 id="level-title" class="font-serif text-2xl sm:text-3xl font-bold text-white">Foundations of Computing & Logic</h3>
+          </div>
+          <span id="level-icon" class="text-4xl sm:text-5xl">💻</span>
+        </div>
+        <p id="level-desc" class="text-neutral-300 text-sm sm:text-base leading-relaxed mb-6">
+          Stepped onto the Pan-Atlantic University campus ready to decode how computers think—mastering discrete mathematics, structured programming fundamentals, and problem-solving discipline.
+        </p>
+        <div id="level-tags" class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 rounded-lg bg-black/50 border border-white/10 font-mono text-xs text-gold-light">#FirstLinesOfCode</span>
+          <span class="px-3 py-1 rounded-lg bg-black/50 border border-white/10 font-mono text-xs text-gold-light">#DiscreteMath</span>
+          <span class="px-3 py-1 rounded-lg bg-black/50 border border-white/10 font-mono text-xs text-gold-light">#PAUFreshman</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       DRESS CODE SECTION: WHITE, BLACK & GOLD
+       ========================================= -->
+  <section id="dress-code" class="py-16 sm:py-24 px-4 sm:px-6 bg-white">
+    <div class="max-w-5xl mx-auto space-y-12">
+      <div class="text-center space-y-3 max-w-2xl mx-auto">
+        <span class="font-mono text-xs uppercase tracking-widest text-gold-dark">Celebration Palette</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-obsidian">Official Dress Code</h2>
+        <p class="text-sm sm:text-base text-neutral-600">
+          Celebrate in style! Our celebration palette is <strong class="text-obsidian">Crisp White</strong> and <strong class="text-obsidian">Classic Black</strong> elevated with a <strong class="text-gold-dark">Touch of Gold</strong>.
+        </p>
+      </div>
+
+      <!-- Interactive Color Swatch Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- White Swatch -->
+        <div onclick="showStyleTip('white')" class="cursor-pointer group rounded-3xl p-7 bg-ivory border-2 border-neutral-200 hover:border-obsidian transition shadow-sm active:scale-[0.99]">
+          <div class="w-16 h-16 rounded-2xl bg-white border-2 border-neutral-300 shadow-inner mb-5 flex items-center justify-center font-mono text-xs text-neutral-500">
+            #FFFFFF
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-obsidian mb-2">Crisp White</h3>
+          <p class="text-sm text-neutral-600 leading-relaxed mb-4">
+            Tailored white agbada, lace, flowing dresses, or sharp white button-downs for a fresh, radiant convocation look.
+          </p>
+          <span class="text-xs font-mono font-semibold text-obsidian group-hover:underline">Tap for outfit inspiration →</span>
+        </div>
+
+        <!-- Black Swatch -->
+        <div onclick="showStyleTip('black')" class="cursor-pointer group rounded-3xl p-7 bg-obsidian text-white border-2 border-obsidian hover:border-gold transition shadow-lg active:scale-[0.99]">
+          <div class="w-16 h-16 rounded-2xl bg-charcoal border-2 border-white/20 mb-5 flex items-center justify-center font-mono text-xs text-neutral-300">
+            #0B0B0D
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-white mb-2">Classic Black</h3>
+          <p class="text-sm text-neutral-300 leading-relaxed mb-4">
+            Sleek black suits, evening silhouettes, aso-oke accents, or monochrome pairings that bring timeless elegance.
+          </p>
+          <span class="text-xs font-mono font-semibold text-gold group-hover:underline">Tap for outfit inspiration →</span>
+        </div>
+
+        <!-- Touch of Gold Swatch -->
+        <div onclick="showStyleTip('gold')" class="cursor-pointer group rounded-3xl p-7 bg-gradient-to-br from-[#FBF5E1] to-[#F3E2AB] border-2 border-gold hover:shadow-xl transition active:scale-[0.99]">
+          <div class="w-16 h-16 rounded-2xl bg-gold border-2 border-gold-dark mb-5 flex items-center justify-center font-mono text-xs text-obsidian font-bold">
+            #D4AF37
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-obsidian mb-2">A Touch of Gold</h3>
+          <p class="text-sm text-neutral-800 leading-relaxed mb-4">
+            Gold gele, jewelry, cufflinks, embroidery, heels, or pocket squares to add that celebratory sparkle.
+          </p>
+          <span class="text-xs font-mono font-semibold text-obsidian group-hover:underline">Tap for outfit inspiration →</span>
+        </div>
+
+      </div>
+
+      <!-- Interactive Outfit Tip Banner -->
+      <div id="style-tip-box" class="rounded-2xl bg-neutral-100 border border-black/10 p-5 text-center text-sm sm:text-base text-obsidian font-medium">
+        💡 <strong>Style Tip:</strong> Tap any of the three color cards above for quick outfit pairing ideas!
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       RSVP (MICROSOFT FORM) & GIFT / OPAY SECTION
+       ========================================= -->
+  <section id="rsvp" class="py-16 sm:py-24 px-4 sm:px-6 bg-ivory border-t border-black/10 circuit-bg">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+      
+      <!-- Card 1: Microsoft Form Family RSVP -->
+      <div class="bg-white rounded-3xl p-7 sm:p-10 border-2 border-obsidian shadow-xl flex flex-col justify-between space-y-6">
+        <div class="space-y-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-obsidian text-white text-xs font-mono uppercase tracking-wider">
+            <span>💌</span>
+            <span>Family & Guests RSVP</span>
+          </div>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-obsidian">
+            Will You Be Celebrating With Us?
+          </h2>
+          <p class="text-sm sm:text-base text-neutral-600 leading-relaxed">
+            Whether you are joining us on <strong class="text-obsidian">Saturday, 4th December 2026 at 10:30 AM</strong> at Pan-Atlantic University or sending warm wishes from afar, please fill out our quick Microsoft Form to let us know if you are coming.
+          </p>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <a 
+            href="https://forms.cloud.microsoft/r/zyDUUNAjF0?origin=lprLink" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="touch-btn w-full min-h-[54px] px-6 py-4 rounded-2xl bg-obsidian text-white font-bold text-sm sm:text-base border-2 border-gold hover:bg-neutral-900 active:scale-[0.98] transition flex items-center justify-center gap-2.5 shadow-md">
+            <span>Open Microsoft RSVP Form</span>
+            <span>↗</span>
+          </a>
+          <p class="text-xs text-center text-neutral-500">
+            Takes less than 60 seconds • Opens in a new tab
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 2: Bless the Graduate (OPay Gift Card) -->
+      <div id="gift" class="bg-obsidian text-white rounded-3xl p-7 sm:p-10 border-2 border-gold shadow-2xl flex flex-col justify-between space-y-6 relative overflow-hidden">
+        <div class="space-y-4 relative z-10">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold/20 border border-gold/50 text-gold-light text-xs font-mono uppercase tracking-wider">
+            <span>🎁</span>
+            <span>Bless the Graduate</span>
+          </div>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white">
+            Make the Day Extra Special
+          </h2>
+          <p class="text-sm sm:text-base text-neutral-300 leading-relaxed">
+            Your presence and prayers mean the world! For family and loved ones who wish to sow a graduation gift or support the celebration, you can use the account details below:
+          </p>
+
+          <!-- Account Details Box -->
+          <div class="bg-charcoal border border-gold/50 rounded-2xl p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+              <span class="text-xs font-mono uppercase text-neutral-400">Bank / Wallet</span>
+              <span class="font-bold text-gold-light text-base">OPay</span>
+            </div>
+            
+            <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+              <span class="text-xs font-mono uppercase text-neutral-400">Account Number</span>
+              <div class="flex items-center gap-2.5">
+                <span id="account-number" class="font-mono font-bold text-lg sm:text-xl tracking-wider text-white">9160333937</span>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-0.5">
+              <span class="text-xs font-mono uppercase text-neutral-400">Account Name</span>
+              <span class="font-semibold text-sm sm:text-base text-white text-right">Praise Oluwatishe Oluwaseun</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- One-Tap Copy Account Number Button -->
+        <div class="space-y-2 relative z-10">
+          <button 
+            type="button" 
+            id="copy-btn"
+            onclick="copyAccountNumber()"
+            class="touch-btn w-full min-h-[54px] px-6 py-4 rounded-2xl bg-gold text-obsidian font-bold text-sm sm:text-base hover:bg-gold-light active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-lg">
+            <span>📋</span>
+            <span id="copy-btn-text">Copy OPay Account Number</span>
+          </button>
+          <p id="copy-feedback" class="text-xs text-center text-gold-light h-4 font-medium"></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================
+       FOOTER
+       ========================================= -->
+  <footer class="bg-obsidian text-neutral-400 py-10 px-4 sm:px-6 border-t border-gold/30 text-center">
+    <div class="max-w-4xl mx-auto space-y-3">
+      <p class="font-serif text-lg sm:text-xl text-white font-semibold">
+        Praise Oluwatishe Oluwaseun
+      </p>
+      <p class="text-xs sm:text-sm font-mono text-gold-light">
+        B.Sc. Computer Science (4-Year Program) • Saturday, 4th December 2026 • 10:30 AM
+      </p>
+      <p class="text-xs text-neutral-400">
+        Pan-Atlantic University, Km 52, Lekki–Epe Expressway, Ibeju-Lekki, Lagos, Nigeria
+      </p>
+      <p class="text-xs text-neutral-500 pt-2">
+        Dress Code: White & Black with a Touch of Gold ✨
+      </p>
+    </div>
+  </footer>
+
+  <!-- =========================================
+       JAVASCRIPT: CONFETTI, COUNTDOWN, MENU & INTERACTIVITY
+       ========================================= -->
+  <script>
+    /* 1. SELF-CONTAINED HTML5 CANVAS CONFETTI ENGINE (Works Offline & on All Mobile Phones) */
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let confettiParticles = [];
+    let animationFrameId = null;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const CONFETTI_COLORS = ['#D4AF37', '#F3D98B', '#AA821C', '#0B0B0D', '#FFFFFF'];
+
+    function createParticles(count) {
+      const originX = canvas.width / 2;
+      const originY = canvas.height * 0.35;
+
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 4 + Math.random() * 11;
+        confettiParticles.push({
+          x: originX + (Math.random() - 0.5) * 140,
+          y: originY + (Math.random() - 0.5) * 60,
+          vx: Math.cos(angle) * velocity,
+          vy: Math.sin(angle) * velocity - 4,
+          size: 6 + Math.random() * 7,
+          color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 12,
+          gravity: 0.25 + Math.random() * 0.12,
+          drag: 0.97,
+          opacity: 1,
+          shape: Math.random() > 0.4 ? 'rect' : 'circle'
+        });
+      }
+    }
+
+    function renderConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = confettiParticles.length - 1; i >= 0; i--) {
+        const p = confettiParticles[i];
+        p.vx *= p.drag;
+        p.vy = p.vy * p.drag + p.gravity;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rotation += p.rotationSpeed;
+
+        if (p.y > canvas.height - 40) {
+          p.opacity -= 0.03;
+        }
+
+        if (p.opacity <= 0 || p.y > canvas.height + 30) {
+          confettiParticles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.opacity);
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+
+        if (p.shape === 'rect') {
+          ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+          ctx.strokeStyle = 'rgba(0,0,0,0.18)';
+          ctx.lineWidth = 0.6;
+          ctx.strokeRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size / 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      if (confettiParticles.length > 0) {
+        animationFrameId = requestAnimationFrame(renderConfetti);
+      } else {
+        animationFrameId = null;
+      }
+    }
+
+    function triggerConfettiBurst(amount = 95) {
+      createParticles(amount);
+      if (!animationFrameId) {
+        renderConfetti();
+      }
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(() => triggerConfettiBurst(110), 350);
+    });
+
+
+    /* 2. LIVE COUNTDOWN TIMER TO SATURDAY, 4TH DECEMBER 2026, 10:30 AM WAT */
+    const convocationDate = new Date('2026-12-04T10:30:00+01:00').getTime();
+
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = convocationDate - now;
+
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '00';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-mins').textContent = '00';
+        document.getElementById('cd-secs').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+      document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+
+    /* 3. MOBILE NAVIGATION MENU TOGGLE */
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    function toggleMobileMenu(forceClose = false) {
+      const isOpen = forceClose ? false : !mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      hamburgerIcon.classList.toggle('hidden', isOpen);
+      closeIcon.classList.toggle('hidden', !isOpen);
+    }
+
+    menuToggle.addEventListener('click', () => toggleMobileMenu());
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => toggleMobileMenu(true));
+    });
+
+
+    /* 4. INTERACTIVE CHEER COUNTER */
+    let cheerCount = 124;
+    function incrementCheer() {
+      cheerCount++;
+      document.getElementById('cheer-count').textContent = cheerCount;
+      triggerConfettiBurst(45);
+    }
+
+
+    /* 5. 4-YEAR COMPUTER SCIENCE TIMELINE SWITCHER */
+    const levelsData = [
+      {
+        badge: 'Year 1 • Hello World',
+        title: 'Foundations of Computing & Logic',
+        icon: '💻',
+        desc: 'Stepped onto the Pan-Atlantic University campus ready to decode how computers think—mastering discrete mathematics, structured programming fundamentals, and problem-solving discipline.',
+        tags: ['#FirstLinesOfCode', '#DiscreteMath', '#PAUFreshman']
+      },
+      {
+        badge: 'Year 2 • Data & Architecture',
+        title: 'Data Structures, Algorithms & Systems',
+        icon: '⚙️',
+        desc: 'Dived deep into object-oriented design, data structures, computer architecture, and database systems—turning raw logic into clean, efficient software.',
+        tags: ['#DataStructures', '#Algorithms', '#DatabaseSystems']
+      },
+      {
+        badge: 'Year 3 • Real-World Engineering',
+        title: 'Software Engineering & Industry Immersion',
+        icon: '🚀',
+        desc: 'Built full-stack applications, collaborated on Human-Computer Interaction prototypes, and gained hands-on industry internship experience solving real technical challenges.',
+        tags: ['#FullStackDev', '#HCI', '#TechInternship']
+      },
+      {
+        badge: 'Year 4 • Final Compilation 🎓',
+        title: 'Final-Year Research & B.Sc. Graduation',
+        icon: '🎓',
+        desc: 'Designed, built, and defended a Machine Learning & Explainable AI final-year project—completing all 4 years of Computer Science at Pan-Atlantic University!',
+        tags: ['#BScComputerScience', '#PAUGraduate', '#ClassOf2026']
+      }
+    ];
+
+    function selectLevel(index) {
+      const data = levelsData[index];
+      document.getElementById('level-badge').textContent = data.badge;
+      document.getElementById('level-title').textContent = data.title;
+      document.getElementById('level-icon').textContent = data.icon;
+      document.getElementById('level-desc').textContent = data.desc;
+
+      const tagsContainer = document.getElementById('level-tags');
+      tagsContainer.innerHTML = data.tags
+        .map(tag => `<span class="px-3 py-1 rounded-lg bg-black/50 border border-white/10 font-mono text-xs text-gold-light">${tag}</span>`)
+        .join('');
+
+      document.querySelectorAll('.level-tab').forEach((btn, idx) => {
+        if (idx === index) {
+          btn.className = 'level-tab min-h-[48px] py-3 px-4 rounded-xl font-mono text-sm font-semibold border border-gold bg-gold text-obsidian transition active:scale-95';
+        } else {
+          btn.className = 'level-tab min-h-[48px] py-3 px-4 rounded-xl font-mono text-sm font-semibold border border-white/15 bg-charcoal text-neutral-300 hover:border-gold/50 transition active:scale-95';
+        }
+      });
+
+      if (index === 3) {
+        triggerConfettiBurst(60);
+      }
+    }
+
+
+    /* 6. INTERACTIVE DRESS CODE STYLE TIPS */
+    const styleTips = {
+      white: '🤍 Crisp White Look: Pair an all-white native attire or tailored white dress with gold wristwatch, gold earrings, or metallic gold heels!',
+      black: '🖤 Classic Black Look: A sharp black suit, jumpsuit, or gown accented with a gold brooch, gold tie clip, or gold clutch steals the spotlight!',
+      gold: '✨ Touch of Gold Look: Keep your base outfit white or black, and let gold accessories—gele, cufflinks, jewelry, or embroidery—shine!'
+    };
+
+    function showStyleTip(colorKey) {
+      const box = document.getElementById('style-tip-box');
+      box.innerHTML = styleTips[colorKey];
+      box.classList.add('border-gold', 'bg-gold/10');
+    }
+
+
+    /* 7. ONE-TAP COPY OPAY ACCOUNT NUMBER */
+    function copyAccountNumber() {
+      const accNum = '9160333937';
+      const btnText = document.getElementById('copy-btn-text');
+      const feedback = document.getElementById('copy-feedback');
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(accNum).then(() => {
+          onCopySuccess(btnText, feedback);
+        }).catch(() => {
+          fallbackCopy(accNum, btnText, feedback);
+        });
+      } else {
+        fallbackCopy(accNum, btnText, feedback);
+      }
+    }
+
+    function fallbackCopy(text, btnText, feedback) {
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      onCopySuccess(btnText, feedback);
+    }
+
+    function onCopySuccess(btnText, feedback) {
+      btnText.textContent = 'Copied: 9160333937 ✓';
+      feedback.textContent = 'OPay account number copied! Thank you for blessing Praise 💛';
+      triggerConfettiBurst(75);
+      setTimeout(() => {
+        btnText.textContent = 'Copy OPay Account Number';
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
+
+```
